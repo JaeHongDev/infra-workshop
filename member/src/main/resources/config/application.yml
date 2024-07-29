@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    active: local
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: username@gmail.com
+    password: password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+            protocols: TLSv1.2
+        mime:
+          charset: UTF-8
+
+logging:
+  config: classpath:config/logback-${spring.profiles.active}.xml
+
+management:
+  server:
+    port: 8180
+  endpoints:
+    jmx:
+      exposure:
+        exclude: "*"
+    web:
+      exposure:
+        include: info, health
+      base-path: /management
+  endpoint:
+    health:
+      showDetails: never
+    metrics:
+      enabled: true
+
+security:
+  jwt:
+    token:
+      secret-key: secret
+      expire-length: 3600000
+
+spring-doc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+    docExpansion: none
